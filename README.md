@@ -7,7 +7,7 @@ Home Assistant can keep a medal tally for your country and notify you of medal w
 - Checks for medal updates every 5 minutes
 - Switch to turn notifications on or off
 
-** Read setup notes below screenshots for configuration you will need to do **
+* Read setup notes below screenshots for configuration you will need to do *
 
 <img src="https://github.com/enzymes/home_assistant_olympic_medal_tally/blob/main/olympic_medal_tally.png">
 
