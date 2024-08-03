@@ -1,0 +1,56 @@
+input_boolean:
+  medals_startup:
+    name: Medals reset
+    initial: on
+  medals_notifications:
+    name: Notify about medal wins
+
+input_number:
+  gold_medals:
+    name: Gold
+    min: 0
+    max: 300
+  silver_medals:
+    name: Silver
+    min: 0
+    max: 300
+  bronze_medals:
+    name: Bronze
+    min: 0
+    max: 300
+  total_medals:
+    name: Total
+    min: 0
+    max: 300
+  medal_ranking:
+    name: Ranking
+    min: 0
+    max: 300
+
+input_text:
+  new_medal_ranking:
+    initial: ''
+
+sensor:
+  - platform: template
+    sensors:
+      gold_medals:
+        friendly_name: "Gold"
+        value_template: "{{ states('input_number.gold_medals') | int }}"
+        icon_template: mdi:podium-gold
+      silver_medals:
+        friendly_name: "Silver"
+        value_template: "{{ states('input_number.silver_medals') | int }}"
+        icon_template: mdi:podium-silver
+      bronze_medals:
+        friendly_name: "Bronze"
+        value_template: "{{ states('input_number.bronze_medals') | int }}"
+        icon_template: mdi:podium-bronze
+      total_medals:
+        friendly_name: "Total"
+        value_template: "{{ states('input_number.total_medals') | int }}"
+        icon_template: mdi:medal
+      medal_ranking:
+        friendly_name: "Ranking"
+        value_template: "{{ states('input_number.medal_ranking') | int }}"
+        icon_template: mdi:arrow-right-drop-circle

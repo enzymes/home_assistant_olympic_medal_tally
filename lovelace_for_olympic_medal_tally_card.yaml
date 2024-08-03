@@ -1,0 +1,25 @@
+type: vertical-stack
+cards:
+  - type: picture
+    image: /local/paris2024.jpg
+    tap_action:
+      action: none
+    hold_action:
+      action: none
+  - type: entities
+    entities:
+      - entity: sensor.gold_medals
+      - entity: sensor.silver_medals
+      - entity: sensor.bronze_medals
+      - entity: sensor.total_medals
+      - entity: sensor.medal_ranking
+    title: Australian Olympic medals
+    show_header_toggle: false
+  - type: markdown
+    content: >-
+      For the full medal tally, go to the [Paris 2024
+      website](https://olympics.com/en/paris-2024/medals).
+  - type: entities
+    entities:
+      - entity: input_boolean.medals_notifications
+        icon: mdi:bell
