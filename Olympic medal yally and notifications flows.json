@@ -1,0 +1,4453 @@
+[
+    {
+        "id": "f3a8811d.6a112",
+        "type": "subflow",
+        "name": "Ok to send notifications?",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "3b002188.124f4e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 700,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "119b4bb3.558394",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "3b002188.124f4e",
+        "type": "api-current-state",
+        "z": "f3a8811d.6a112",
+        "name": "Are notifications on?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.notifications_send",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "119b4bb3.558394"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "119b4bb3.558394",
+        "type": "api-current-state",
+        "z": "f3a8811d.6a112",
+        "name": "Is snooze notifications active?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.notifications_snooze",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "x": 470,
+        "y": 80,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "90352d74c8b6c659",
+        "type": "tab",
+        "label": "Olympics medal tally",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6476460b95fd4bc6",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Is valid number?",
+        "property": "total_medals",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^[0-9]+$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 1,
+        "x": 2500,
+        "y": 1320,
+        "wires": [
+            [
+                "fa174f6bfa5457f1",
+                "cb18e624c79186cc"
+            ]
+        ]
+    },
+    {
+        "id": "fa174f6bfa5457f1",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Total medals",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "total_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2750,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "61a45c8799a51455",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Total tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.total_medals"
+        ],
+        "data": "{\"value\": {{total_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3590,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb18e624c79186cc",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.total_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "current_total",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2770,
+        "y": 1300,
+        "wires": [
+            [
+                "ff10243cb2f09c09"
+            ]
+        ]
+    },
+    {
+        "id": "cd6260c83822999d",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Another medal!",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "total_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3580,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "c8ae29cf112d58da",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "No update",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "total_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3570,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "02fed245ad055c3f",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Is valid number?",
+        "property": "bronze_medals",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^[0-9]+$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 1,
+        "x": 2530,
+        "y": 1040,
+        "wires": [
+            [
+                "2aa500c2532f1479",
+                "7e0092d99a696a29"
+            ]
+        ]
+    },
+    {
+        "id": "2aa500c2532f1479",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Total bronze",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "bronze_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2750,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "282b192dfbcad29d",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Bronze tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.bronze_medals"
+        ],
+        "data": "{\"value\": {{bronze_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3590,
+        "y": 960,
+        "wires": [
+            [
+                "edc7c7b06860b289"
+            ]
+        ]
+    },
+    {
+        "id": "7e0092d99a696a29",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.bronze_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "current_bronze",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2770,
+        "y": 1020,
+        "wires": [
+            [
+                "156d1721db66b4ee"
+            ]
+        ]
+    },
+    {
+        "id": "3a5d092a3b1f47e6",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Another Bronze medal!",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "bronze_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3600,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "93e09e4ea4df314a",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "No update",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "bronze_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3570,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "ee4a41877527dcca",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Is valid number?",
+        "property": "silver_medals",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^[0-9]+$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 1,
+        "x": 2530,
+        "y": 820,
+        "wires": [
+            [
+                "9d2462b35892d47b",
+                "66a86cfbf4f1e14f"
+            ]
+        ]
+    },
+    {
+        "id": "9d2462b35892d47b",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Total silver",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "silver_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2740,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "349bdfa34fc5265e",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Silver tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.silver_medals"
+        ],
+        "data": "{\"value\": {{silver_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3580,
+        "y": 740,
+        "wires": [
+            [
+                "3dfbbe165fe41a9d"
+            ]
+        ]
+    },
+    {
+        "id": "66a86cfbf4f1e14f",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.silver_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "current_silver",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2760,
+        "y": 800,
+        "wires": [
+            [
+                "185eb8f93e1cebf8"
+            ]
+        ]
+    },
+    {
+        "id": "c0d5368a7a891454",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Another Silver medal!",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "silver_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3590,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "6ab19e6489b52b53",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "No update",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "silver_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3560,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "8e789ed144ac98e7",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Is valid number?",
+        "property": "gold_medals",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^[0-9]+$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 1,
+        "x": 2530,
+        "y": 600,
+        "wires": [
+            [
+                "5b1299af085d22a6",
+                "457b46e52e4dd8b4",
+                "b3157a70e8779951"
+            ]
+        ]
+    },
+    {
+        "id": "5b1299af085d22a6",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Total gold",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "gold_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2730,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "1d8d86818384643b",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Gold tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.gold_medals"
+        ],
+        "data": "{\"value\": {{gold_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3570,
+        "y": 500,
+        "wires": [
+            [
+                "e5438bd69a131f78"
+            ]
+        ]
+    },
+    {
+        "id": "457b46e52e4dd8b4",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.gold_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "current_gold",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2750,
+        "y": 580,
+        "wires": [
+            [
+                "c882136f757bc3b5"
+            ]
+        ]
+    },
+    {
+        "id": "f8f73819f77e91e0",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Check diff",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "1",
+                "vt": "num",
+                "v2": "4",
+                "v2t": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 3360,
+        "y": 540,
+        "wires": [
+            [
+                "3f2baabb41db979a",
+                "1d8d86818384643b"
+            ],
+            [
+                "c2f3c602e3227022"
+            ],
+            [
+                "c2f3c602e3227022"
+            ]
+        ],
+        "outputLabels": [
+            "2 new medals (legit)",
+            "Error - too many new medals",
+            "Other error"
+        ]
+    },
+    {
+        "id": "3f2baabb41db979a",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Another Gold medal!",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "gold_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3580,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c2f3c602e3227022",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "No update",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "gold_medals",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3550,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "f481bbddd5e5724f",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Build notification announcement",
+        "func": "msg.announcement = \"We've just won another \" + msg.new_medal_icon + \" \" + msg.new_medal_type + \" medal! We now have 🥇 \" + msg.gold_medals + \" gold, 🥈 \" + msg.silver_medals + \" silver, 🥉 \" + msg.bronze_medals + \" bronze. Total \" + msg.total_medals + \" medals. \" + msg.new_medal_ranking \n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5620,
+        "y": 1180,
+        "wires": [
+            [
+                "1891f0e79d71ce86"
+            ]
+        ]
+    },
+    {
+        "id": "3dfbbe165fe41a9d",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Set silver medal type",
+        "func": "msg.new_medal_icon = \"🥈\"\nmsg.new_medal_type = \"silver\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3810,
+        "y": 740,
+        "wires": [
+            [
+                "83956e35d244a1a7"
+            ]
+        ]
+    },
+    {
+        "id": "e5438bd69a131f78",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Set gold medal type",
+        "func": "msg.new_medal_icon = \"🥇\"\nmsg.new_medal_type = \"gold\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3800,
+        "y": 500,
+        "wires": [
+            [
+                "99223bbd0c5995bc"
+            ]
+        ]
+    },
+    {
+        "id": "edc7c7b06860b289",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Set bronze medal type",
+        "func": "msg.new_medal_icon = \"🥉\"\nmsg.new_medal_type = \"bronze\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3820,
+        "y": 960,
+        "wires": [
+            [
+                "030eefba0843ba25"
+            ]
+        ]
+    },
+    {
+        "id": "68b0775de0aca129",
+        "type": "inject",
+        "z": "90352d74c8b6c659",
+        "name": "Reset medals to zero, resets daily at 4am",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 04 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 680,
+        "wires": [
+            [
+                "76c4854c4d1d8b9e",
+                "c7b1c048fbb2effa",
+                "eae0a576c3e8c3fc",
+                "4355cb64f41ca221",
+                "d9ec4f0448b93203",
+                "22b471d7d54cab3d"
+            ]
+        ]
+    },
+    {
+        "id": "76c4854c4d1d8b9e",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Reset Gold tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.gold_medals"
+        ],
+        "data": "{\"value\": 0}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 400,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c7b1c048fbb2effa",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Reset Silver tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.silver_medals"
+        ],
+        "data": "{\"value\": 0}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 410,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eae0a576c3e8c3fc",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Reset Bronze tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.bronze_medals"
+        ],
+        "data": "{\"value\": 0}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 410,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4355cb64f41ca221",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Reset Total tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.total_medals"
+        ],
+        "data": "{\"value\": 0}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 400,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1891f0e79d71ce86",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Send to noficiations to your Home Assistant app on your mobile",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_mc_hass_app",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"title\":\"{{new_medal_icon}} Another {{new_medal_type}} medal! {{new_medal_icon}}\",\"message\":\"{{announcement}}\",\"data\":{\"tag\":\"sport\",\"ttl\":86400,\"priority\":\"high\"}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 6300,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "99223bbd0c5995bc",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 4360,
+        "y": 860,
+        "wires": [
+            [
+                "16a2ef8ac4dcdca3"
+            ]
+        ]
+    },
+    {
+        "id": "a091d3b9089ae6d3",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current Gold tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "input_number.gold_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "gold_medals",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 4630,
+        "y": 980,
+        "wires": [
+            [
+                "b60579294516e6d8"
+            ]
+        ]
+    },
+    {
+        "id": "b60579294516e6d8",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current Silver tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "input_number.silver_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "silver_medals",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 4830,
+        "y": 980,
+        "wires": [
+            [
+                "4d4723cb1488630c"
+            ]
+        ]
+    },
+    {
+        "id": "4d4723cb1488630c",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current Bronze tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "input_number.bronze_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "bronze_medals",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 5040,
+        "y": 980,
+        "wires": [
+            [
+                "8ed27c9729be3950"
+            ]
+        ]
+    },
+    {
+        "id": "8ed27c9729be3950",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current tally",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "input_number.total_medals",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "total_medals",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 5250,
+        "y": 980,
+        "wires": [
+            [
+                "8951c508836f0889"
+            ]
+        ]
+    },
+    {
+        "id": "ac6a8de3c1b9c38c",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Build Google Home announcement",
+        "func": "//msg.google_home_announcement = \"Daddy just made fifty bucks!\"\n// return msg;\n\nmsg.google_home_announcement = \"We have just won another \" + msg.new_medal_type + \" medal! \" + msg.new_medal_ranking\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5630,
+        "y": 1240,
+        "wires": [
+            [
+                "55c1502c9f177cda",
+                "70a651559a533e02",
+                "ab4e58308fa04e67"
+            ]
+        ]
+    },
+    {
+        "id": "70a651559a533e02",
+        "type": "subflow:f3a8811d.6a112",
+        "z": "90352d74c8b6c659",
+        "d": true,
+        "name": "",
+        "env": [],
+        "x": 5970,
+        "y": 1400,
+        "wires": [
+            [
+                "ab4e58308fa04e67"
+            ]
+        ]
+    },
+    {
+        "id": "4945dde15f60821d",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Set volume",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "media_player",
+        "service": "volume_set",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.family_room_speaker"
+        ],
+        "data": "{\"volume_level\":\"0.4\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 6540,
+        "y": 1240,
+        "wires": [
+            [
+                "6825bc71faa87cc1"
+            ]
+        ]
+    },
+    {
+        "id": "9253e8cdca8d3984",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Make announcement",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "tts",
+        "service": "speak",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "tts.google_en_com_au"
+        ],
+        "data": "{\"message\":\"{{google_home_announcement}}\",\"media_player_entity_id\":\"media_player.family_room_speaker\",\"cache\":\"true\",\"language\":\"en-au\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 7120,
+        "y": 1240,
+        "wires": [
+            [
+                "f7b303b1909cef4d"
+            ]
+        ]
+    },
+    {
+        "id": "55c1502c9f177cda",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "TTS",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "google_home_announcement",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 5710,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "6825bc71faa87cc1",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Play \"Win\" sound",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "media_player",
+        "service": "play_media",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.family_room_speaker"
+        ],
+        "data": "{\"media_content_id\":\"https://YOUR-SERVER-DOMAIN-HERE/local/win.mp3\",\"media_content_type\":\"music\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 6740,
+        "y": 1240,
+        "wires": [
+            [
+                "78593332d7385b55"
+            ]
+        ]
+    },
+    {
+        "id": "a3630ab55e63f875",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Gold family room lamp",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "lifx",
+        "service": "effect_pulse",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.family_room_lamp"
+        ],
+        "data": "{\"brightness\":\"255\",\"color_name\":\"gold\",\"period\":\"1\",\"cycles\":\"3\",\"mode\":\"breathe\",\"entity_id\":\"light.family_room_lamp\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 6640,
+        "y": 1460,
+        "wires": [
+            [
+                "da5175493207ef44"
+            ]
+        ]
+    },
+    {
+        "id": "e3720480b5d331f7",
+        "type": "inject",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 6380,
+        "y": 1460,
+        "wires": [
+            [
+                "a3630ab55e63f875"
+            ]
+        ]
+    },
+    {
+        "id": "d96bb4ae7f540f57",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Green family room lamp",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "lifx",
+        "service": "effect_pulse",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.family_room_lamp"
+        ],
+        "data": "{\"brightness\":\"255\",\"color_name\":\"green\",\"period\":\"1\",\"cycles\":\"3\",\"mode\":\"breathe\",\"entity_id\":\"light.family_room_lamp\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 7010,
+        "y": 1460,
+        "wires": [
+            [
+                "eb809968c5ad4ffa"
+            ]
+        ]
+    },
+    {
+        "id": "da5175493207ef44",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 6820,
+        "y": 1460,
+        "wires": [
+            [
+                "d96bb4ae7f540f57"
+            ]
+        ]
+    },
+    {
+        "id": "3c418b5e90fb190a",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Gold family room lamp",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "lifx",
+        "service": "effect_pulse",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.family_room_lamp"
+        ],
+        "data": "{\"brightness\":\"255\",\"color_name\":\"gold\",\"period\":\"1\",\"cycles\":\"3\",\"mode\":\"breathe\",\"entity_id\":\"light.family_room_lamp\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 6640,
+        "y": 1520,
+        "wires": [
+            [
+                "e0125b0b01e87d69"
+            ]
+        ]
+    },
+    {
+        "id": "e38f11e841454083",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Green family room lamp",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "lifx",
+        "service": "effect_pulse",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.family_room_lamp"
+        ],
+        "data": "{\"brightness\":\"255\",\"color_name\":\"green\",\"period\":\"1\",\"cycles\":\"3\",\"mode\":\"breathe\",\"entity_id\":\"light.family_room_lamp\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 7010,
+        "y": 1520,
+        "wires": [
+            [
+                "a990ad0996d54823"
+            ]
+        ]
+    },
+    {
+        "id": "e0125b0b01e87d69",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 6820,
+        "y": 1520,
+        "wires": [
+            [
+                "e38f11e841454083"
+            ]
+        ]
+    },
+    {
+        "id": "eb809968c5ad4ffa",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 7220,
+        "y": 1460,
+        "wires": [
+            [
+                "3c418b5e90fb190a"
+            ]
+        ]
+    },
+    {
+        "id": "8ca8aab3f5bc9d8e",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Gold family room lamp",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "lifx",
+        "service": "effect_pulse",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.family_room_lamp"
+        ],
+        "data": "{\"brightness\":\"255\",\"color_name\":\"gold\",\"period\":\"1\",\"cycles\":\"3\",\"mode\":\"breathe\",\"entity_id\":\"light.family_room_lamp\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 6640,
+        "y": 1580,
+        "wires": [
+            [
+                "b000cc4507bd426e"
+            ]
+        ]
+    },
+    {
+        "id": "12b332ea79b6a1d6",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Green family room lamp",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "lifx",
+        "service": "effect_pulse",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "light.family_room_lamp"
+        ],
+        "data": "{\"brightness\":\"255\",\"color_name\":\"green\",\"period\":\"1\",\"cycles\":\"3\",\"mode\":\"breathe\",\"entity_id\":\"light.family_room_lamp\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 7010,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b000cc4507bd426e",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 6820,
+        "y": 1580,
+        "wires": [
+            [
+                "12b332ea79b6a1d6"
+            ]
+        ]
+    },
+    {
+        "id": "a990ad0996d54823",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 7200,
+        "y": 1520,
+        "wires": [
+            [
+                "8ca8aab3f5bc9d8e"
+            ]
+        ]
+    },
+    {
+        "id": "78593332d7385b55",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 6920,
+        "y": 1240,
+        "wires": [
+            [
+                "9253e8cdca8d3984"
+            ]
+        ]
+    },
+    {
+        "id": "83956e35d244a1a7",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 4020,
+        "y": 740,
+        "wires": [
+            [
+                "99223bbd0c5995bc"
+            ]
+        ]
+    },
+    {
+        "id": "030eefba0843ba25",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 4020,
+        "y": 960,
+        "wires": [
+            [
+                "99223bbd0c5995bc"
+            ]
+        ]
+    },
+    {
+        "id": "ab4e58308fa04e67",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "Limit to one annoucement at a time",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "30",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "outputs": 1,
+        "x": 6270,
+        "y": 1240,
+        "wires": [
+            [
+                "4945dde15f60821d",
+                "a3630ab55e63f875"
+            ]
+        ]
+    },
+    {
+        "id": "21c438bc37bb2a42",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Play \"Applause\" sound",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "media_player",
+        "service": "play_media",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.family_room_speaker"
+        ],
+        "data": "{\"media_content_id\":\"https://YOUR-SERVER-DOMAIN-HERE/local/applause.mp3\",\"media_content_type\":\"music\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 7540,
+        "y": 1240,
+        "wires": [
+            [
+                "7aa99828d93a446f"
+            ]
+        ]
+    },
+    {
+        "id": "7aa99828d93a446f",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 7740,
+        "y": 1240,
+        "wires": [
+            [
+                "0b0fee3f1b2d2627"
+            ]
+        ]
+    },
+    {
+        "id": "1916128eaca65fd1",
+        "type": "inject",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 6480,
+        "y": 1160,
+        "wires": [
+            [
+                "4945dde15f60821d"
+            ]
+        ]
+    },
+    {
+        "id": "f7b303b1909cef4d",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "8",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 7320,
+        "y": 1240,
+        "wires": [
+            [
+                "21c438bc37bb2a42"
+            ]
+        ]
+    },
+    {
+        "id": "5c16423d1d09b683",
+        "type": "inject",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 7340,
+        "y": 1320,
+        "wires": [
+            [
+                "21c438bc37bb2a42"
+            ]
+        ]
+    },
+    {
+        "id": "0b0fee3f1b2d2627",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Set volume",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "media_player",
+        "service": "volume_set",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.family_room_speaker"
+        ],
+        "data": "{\"volume_level\":\"0.4\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 7900,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "48df6eb545919c56",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Delays help to prioritise gold over silver, silver over bronze",
+        "info": "",
+        "x": 4510,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "2daae6ae3b1e776f",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "To choose a country, change country to",
+        "info": "",
+        "x": 860,
+        "y": 340,
+        "wires": [],
+        "icon": "font-awesome/fa-location-arrow"
+    },
+    {
+        "id": "d816acc44c52b9f7",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Is valid number?",
+        "property": "medal_ranking",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^[0-9]+$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 1,
+        "x": 2210,
+        "y": 1600,
+        "wires": [
+            [
+                "1da61f03734ca621",
+                "ca1781dfef550fd5",
+                "fefe428ddde3c91b"
+            ]
+        ]
+    },
+    {
+        "id": "1da61f03734ca621",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Ranking final",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2480,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "8a803b087018a7bd",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Ranking",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.medal_ranking"
+        ],
+        "data": "{\"value\": {{medal_ranking}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3530,
+        "y": 1620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "818593018dffc0f8",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Gone down",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "new_medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3860,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "ca1781dfef550fd5",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Current ranking",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "num",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.medal_ranking",
+        "state_type": "num",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "current_medal_ranking",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2490,
+        "y": 1580,
+        "wires": [
+            [
+                "5de8d67f998f344e"
+            ]
+        ]
+    },
+    {
+        "id": "053fa05d3b53b1b2",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Same ranking",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "new_medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3870,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "9a4512774baaa16e",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Ranking up",
+        "func": "msg.new_medal_ranking = \"Our ranking has gone up from \" + msg.current_medal_ranking + \" to \" + msg.medal_ranking\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3520,
+        "y": 1580,
+        "wires": [
+            [
+                "818593018dffc0f8",
+                "99223bbd0c5995bc",
+                "014202714ca21796"
+            ]
+        ]
+    },
+    {
+        "id": "cafc213c6c999dcb",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Gone up",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "new_medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3850,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "2aaa734668657767",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Ranking down",
+        "func": "msg.new_medal_ranking = \"Our ranking has gone down from \" + msg.current_medal_ranking + \" to \" + msg.medal_ranking\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3530,
+        "y": 1500,
+        "wires": [
+            [
+                "cafc213c6c999dcb",
+                "99223bbd0c5995bc",
+                "014202714ca21796"
+            ]
+        ]
+    },
+    {
+        "id": "fe34d6dd43066929",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Ranking stays the same",
+        "func": "msg.new_medal_ranking = \"Our ranking remains at \" + msg.medal_ranking\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3560,
+        "y": 1540,
+        "wires": [
+            [
+                "053fa05d3b53b1b2",
+                "99223bbd0c5995bc",
+                "014202714ca21796"
+            ]
+        ]
+    },
+    {
+        "id": "d9ec4f0448b93203",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Reset ranking",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.medal_ranking"
+        ],
+        "data": "{\"value\": 0}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 400,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8951c508836f0889",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "New medal ranking",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_text.new_medal_ranking",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "new_medal_ranking",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 5440,
+        "y": 980,
+        "wires": [
+            [
+                "48086f7659b5cb5e"
+            ]
+        ]
+    },
+    {
+        "id": "22b471d7d54cab3d",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Set reset flag to true",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_boolean",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_boolean.medals_startup"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 420,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "48086f7659b5cb5e",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Is medal reset false?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.medals_startup",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 5680,
+        "y": 980,
+        "wires": [
+            [
+                "a2649320651b9998"
+            ],
+            [
+                "021104028cbb7c47"
+            ]
+        ],
+        "outputLabels": [
+            "No reset active",
+            "Reset active"
+        ]
+    },
+    {
+        "id": "021104028cbb7c47",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Set reset flag to false",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_boolean",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_boolean.medals_startup"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 5940,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d24647c4f746d66c",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Difference",
+        "func": "msg.topic = \"diff\"\nmsg.payload = msg.gold_medals - msg.current_gold;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3180,
+        "y": 540,
+        "wires": [
+            [
+                "f8f73819f77e91e0",
+                "98ac4d253c963fab"
+            ]
+        ]
+    },
+    {
+        "id": "e07fa818b1481186",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Proper medal update check? (Open for notes)",
+        "info": "Sometimes the new medal count jumps\nup way too high, so this ignores those.\n\nOnly allows medal updates of 1 or 2 medals\neach 5 minutes that the medals are checked.\n\nThe tally gets reset daily at 4am",
+        "x": 3280,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "8939e7876aaa76b1",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Check diff",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "1",
+                "vt": "num",
+                "v2": "4",
+                "v2t": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            },
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 3370,
+        "y": 760,
+        "wires": [
+            [
+                "c0d5368a7a891454",
+                "349bdfa34fc5265e"
+            ],
+            [
+                "6ab19e6489b52b53"
+            ],
+            [
+                "6ab19e6489b52b53"
+            ],
+            []
+        ],
+        "outputLabels": [
+            "2 new medals (legit)",
+            "Error - too many new medals",
+            "Other error",
+            null
+        ]
+    },
+    {
+        "id": "f690d926af41596d",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Difference",
+        "func": "msg.topic = \"diff\"\nmsg.payload = msg.silver_medals - msg.current_silver;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3190,
+        "y": 760,
+        "wires": [
+            [
+                "8939e7876aaa76b1",
+                "7360a43f1535e705"
+            ]
+        ]
+    },
+    {
+        "id": "986e831e030ee46f",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Check diff",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "1",
+                "vt": "num",
+                "v2": "4",
+                "v2t": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 3380,
+        "y": 980,
+        "wires": [
+            [
+                "3a5d092a3b1f47e6",
+                "282b192dfbcad29d"
+            ],
+            [
+                "93e09e4ea4df314a"
+            ],
+            [
+                "93e09e4ea4df314a"
+            ]
+        ],
+        "outputLabels": [
+            "2 new medals (legit)",
+            "Error - too many new medals",
+            "Other error"
+        ]
+    },
+    {
+        "id": "2e7db0b316652c4a",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Difference",
+        "func": "msg.topic = \"diff\"\nmsg.payload = msg.bronze_medals - msg.current_bronze;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3200,
+        "y": 980,
+        "wires": [
+            [
+                "986e831e030ee46f",
+                "e530e781e3c62394"
+            ]
+        ]
+    },
+    {
+        "id": "ea2dfcd64e7adf54",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Check diff",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "1",
+                "vt": "num",
+                "v2": "4",
+                "v2t": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 3380,
+        "y": 1260,
+        "wires": [
+            [
+                "cd6260c83822999d",
+                "61a45c8799a51455"
+            ],
+            [
+                "c8ae29cf112d58da"
+            ],
+            [
+                "c8ae29cf112d58da"
+            ]
+        ],
+        "outputLabels": [
+            "2 new medals (legit)",
+            "Error - too many new medals",
+            "Other error"
+        ]
+    },
+    {
+        "id": "dce064246e3eb1c2",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Difference",
+        "func": "msg.topic = \"diff\"\nmsg.payload = msg.total_medals - msg.current_total;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3200,
+        "y": 1260,
+        "wires": [
+            [
+                "ea2dfcd64e7adf54",
+                "3eb06b701bc7c604"
+            ]
+        ]
+    },
+    {
+        "id": "dce87f3b046c1a00",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Difference",
+        "func": "msg.topic = \"diff\"\nmsg.payload = msg.medal_ranking - msg.current_medal_ranking;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2910,
+        "y": 1540,
+        "wires": [
+            [
+                "e6ab2d62d774ee8f",
+                "5f11febf5e5d8ce9"
+            ]
+        ]
+    },
+    {
+        "id": "e6ab2d62d774ee8f",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Check diff",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "1",
+                "vt": "num",
+                "v2": "4",
+                "v2t": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 3090,
+        "y": 1540,
+        "wires": [
+            [
+                "9a4512774baaa16e",
+                "8a803b087018a7bd"
+            ],
+            [
+                "fe34d6dd43066929",
+                "8a803b087018a7bd"
+            ],
+            [
+                "2aaa734668657767",
+                "8a803b087018a7bd"
+            ],
+            [
+                "94c0014c34fe654b",
+                "fe34d6dd43066929"
+            ]
+        ],
+        "outputLabels": [
+            "",
+            "Error - too many new medals",
+            "2 new medals (legit)",
+            "Other error"
+        ]
+    },
+    {
+        "id": "94c0014c34fe654b",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Error",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3500,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "c882136f757bc3b5",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Is medal reset false?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.medals_startup",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2970,
+        "y": 580,
+        "wires": [
+            [
+                "d24647c4f746d66c"
+            ],
+            [
+                "815b031619a0a81e"
+            ]
+        ],
+        "outputLabels": [
+            "No reset active",
+            "Reset active"
+        ]
+    },
+    {
+        "id": "185eb8f93e1cebf8",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Is medal reset false?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.medals_startup",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2980,
+        "y": 800,
+        "wires": [
+            [
+                "f690d926af41596d"
+            ],
+            [
+                "9b97c197810b1d1b"
+            ]
+        ],
+        "outputLabels": [
+            "No reset active",
+            "Reset active"
+        ]
+    },
+    {
+        "id": "156d1721db66b4ee",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Is medal reset false?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.medals_startup",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2990,
+        "y": 1020,
+        "wires": [
+            [
+                "2e7db0b316652c4a"
+            ],
+            [
+                "be79c67db026570f"
+            ]
+        ],
+        "outputLabels": [
+            "No reset active",
+            "Reset active"
+        ]
+    },
+    {
+        "id": "ff10243cb2f09c09",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Is medal reset false?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.medals_startup",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2990,
+        "y": 1300,
+        "wires": [
+            [
+                "dce064246e3eb1c2"
+            ],
+            [
+                "7bf51680cc21eb96"
+            ]
+        ],
+        "outputLabels": [
+            "No reset active",
+            "Reset active"
+        ]
+    },
+    {
+        "id": "5de8d67f998f344e",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Is medal reset false?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.medals_startup",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2700,
+        "y": 1580,
+        "wires": [
+            [
+                "dce87f3b046c1a00"
+            ],
+            [
+                "8a803b087018a7bd"
+            ]
+        ],
+        "outputLabels": [
+            "No reset active",
+            "Reset active"
+        ]
+    },
+    {
+        "id": "7bf51680cc21eb96",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Total tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.total_medals"
+        ],
+        "data": "{\"value\": {{total_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3220,
+        "y": 1320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "be79c67db026570f",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Bronze tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.bronze_medals"
+        ],
+        "data": "{\"value\": {{bronze_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3220,
+        "y": 1040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b97c197810b1d1b",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Silver tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.silver_medals"
+        ],
+        "data": "{\"value\": {{silver_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3210,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "815b031619a0a81e",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Update Gold tally",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_number",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_number.gold_medals"
+        ],
+        "data": "{\"value\": {{gold_medals}}}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3200,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98ac4d253c963fab",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Gold diff",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3370,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c98232101713e459",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "Set reset flag to false",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_boolean",
+        "service": "turn_off",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_boolean.medals_startup"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2970,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b3157a70e8779951",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "20",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 420,
+        "wires": [
+            [
+                "c98232101713e459"
+            ]
+        ]
+    },
+    {
+        "id": "7360a43f1535e705",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Silver diff",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3360,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "e530e781e3c62394",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Bronze diff",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3390,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "3eb06b701bc7c604",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Total diff",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3380,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "5f11febf5e5d8ce9",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Ranking diff",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3100,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "16a2ef8ac4dcdca3",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "New medal?",
+        "property": "new_medal_type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 4430,
+        "y": 980,
+        "wires": [
+            [
+                "a091d3b9089ae6d3"
+            ]
+        ]
+    },
+    {
+        "id": "727c15f62fe819e4",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "New medal ranking",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "new_medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4310,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "4b74456b48ebbfb7",
+        "type": "api-call-service",
+        "z": "90352d74c8b6c659",
+        "name": "new_medal_ranking",
+        "server": "549d68d4.32fdc8",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "input_text",
+        "service": "set_value",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.new_medal_ranking"
+        ],
+        "data": "{\"value\": \"{{new_medal_ranking}}\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 4080,
+        "y": 1660,
+        "wires": [
+            [
+                "727c15f62fe819e4"
+            ]
+        ]
+    },
+    {
+        "id": "014202714ca21796",
+        "type": "delay",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "15",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 3860,
+        "y": 1660,
+        "wires": [
+            [
+                "4b74456b48ebbfb7"
+            ]
+        ]
+    },
+    {
+        "id": "904edefa30c4cf3c",
+        "type": "inject",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 5400,
+        "y": 1300,
+        "wires": [
+            [
+                "ac6a8de3c1b9c38c"
+            ]
+        ]
+    },
+    {
+        "id": "a2649320651b9998",
+        "type": "api-current-state",
+        "z": "90352d74c8b6c659",
+        "name": "Is medal notifications on?",
+        "server": "549d68d4.32fdc8",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.medals_notifications",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 5320,
+        "y": 1220,
+        "wires": [
+            [
+                "ac6a8de3c1b9c38c",
+                "f481bbddd5e5724f"
+            ],
+            []
+        ],
+        "outputLabels": [
+            "No reset active",
+            "Reset active"
+        ]
+    },
+    {
+        "id": "e468e939e701b9ab",
+        "type": "inject",
+        "z": "90352d74c8b6c659",
+        "name": "Check medal tally every 5 minutes",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "x": 220,
+        "y": 440,
+        "wires": [
+            [
+                "f7c557c0ce0c179d"
+            ]
+        ]
+    },
+    {
+        "id": "ba540ecff7e932b4",
+        "type": "exec",
+        "z": "90352d74c8b6c659",
+        "command": " curl -H \"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36\" https://olympics.com/en/paris-2024/medals",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "10",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Get medal tally",
+        "x": 1350,
+        "y": 440,
+        "wires": [
+            [
+                "c28aec817f623c8a"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c28aec817f623c8a",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get medals and ranking",
+        "methods": [
+            {
+                "name": "unescapeHTML",
+                "params": []
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "msg",
+                        "value": "country"
+                    },
+                    {
+                        "type": "str",
+                        "value": "<div data-testid=\"noc-row\""
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ">"
+                    },
+                    {
+                        "type": "str",
+                        "value": "> "
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "medals",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1580,
+        "y": 420,
+        "wires": [
+            [
+                "d01b189c5ea0d012",
+                "9af78b95607091f8"
+            ]
+        ]
+    },
+    {
+        "id": "3d949aecdcb85fbe",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Check for correct data",
+        "property": "medals",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^[\\s\\d]+$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 2010,
+        "y": 420,
+        "wires": [
+            [
+                "4f815a859835d0c3"
+            ]
+        ]
+    },
+    {
+        "id": "d01b189c5ea0d012",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get medals",
+        "methods": [
+            {
+                "name": "stripTags",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            }
+        ],
+        "prop": "medals",
+        "propout": "medals",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1820,
+        "y": 420,
+        "wires": [
+            [
+                "3d949aecdcb85fbe"
+            ]
+        ]
+    },
+    {
+        "id": "4d2994c7be811c94",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get ranking",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "data-item-index=\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\" style=\"overflow-anchor:none\""
+                    }
+                ]
+            }
+        ],
+        "prop": "medals",
+        "propout": "medal_ranking",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1760,
+        "y": 1600,
+        "wires": [
+            [
+                "1240abb4cc9807bc",
+                "1eb621caef960d8a"
+            ]
+        ]
+    },
+    {
+        "id": "1240abb4cc9807bc",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Check for correct data",
+        "property": "medal_ranking",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^[\\s\\d]+$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1970,
+        "y": 1600,
+        "wires": [
+            [
+                "d816acc44c52b9f7",
+                "bf364411e8433bbe"
+            ]
+        ]
+    },
+    {
+        "id": "4f815a859835d0c3",
+        "type": "function",
+        "z": "90352d74c8b6c659",
+        "name": "Get medal data",
+        "func": "// msg.medals = msg.medals.slice(1); // Remove the first match if global search was used\nconst matches = msg.medals.match(/(\\d+) (\\d+) (\\d+) (\\d+)/);\nif (matches) {\n    msg.gold_medals = parseInt(matches[1]);\n    msg.silver_medals = parseInt(matches[2]);\n    msg.bronze_medals = parseInt(matches[3]);\n    msg.total_medals = parseInt(matches[4]);\n} else {\n    // Handle cases where the regex doesn't match (optional)\n    node.error(\"Invalid medal string format\");\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2210,
+        "y": 420,
+        "wires": [
+            [
+                "8e789ed144ac98e7",
+                "ee4a41877527dcca",
+                "02fed245ad055c3f",
+                "6476460b95fd4bc6"
+            ]
+        ]
+    },
+    {
+        "id": "1eb621caef960d8a",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Ranking check 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1830,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "bf364411e8433bbe",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "Ranking check 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "medal_ranking",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2090,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "fefe428ddde3c91b",
+        "type": "change",
+        "z": "90352d74c8b6c659",
+        "name": "Flag medal ranking as collected",
+        "rules": [
+            {
+                "t": "set",
+                "p": "medal_ranking",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2470,
+        "y": 1740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9af78b95607091f8",
+        "type": "switch",
+        "z": "90352d74c8b6c659",
+        "name": "Only get ranking if no value retreived yet",
+        "property": "medal_ranking",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1470,
+        "y": 1600,
+        "wires": [
+            [
+                "4d2994c7be811c94"
+            ]
+        ]
+    },
+    {
+        "id": "f7c557c0ce0c179d",
+        "type": "change",
+        "z": "90352d74c8b6c659",
+        "name": "Flag medal ranking as not collected",
+        "rules": [
+            {
+                "t": "set",
+                "p": "medal_ranking",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 440,
+        "wires": [
+            [
+                "be952434d3ec16e9"
+            ]
+        ]
+    },
+    {
+        "id": "be952434d3ec16e9",
+        "type": "change",
+        "z": "90352d74c8b6c659",
+        "name": "Set country to check for (ie., Australia)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "country",
+                "pt": "msg",
+                "to": "Australia",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 440,
+        "wires": [
+            [
+                "fbe4a83c99d0de55"
+            ]
+        ],
+        "icon": "font-awesome/fa-location-arrow"
+    },
+    {
+        "id": "fbe4a83c99d0de55",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Format country string",
+        "methods": [
+            {
+                "name": "append",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "</span>"
+                    }
+                ]
+            }
+        ],
+        "prop": "country",
+        "propout": "country",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1130,
+        "y": 440,
+        "wires": [
+            [
+                "ba540ecff7e932b4"
+            ]
+        ]
+    },
+    {
+        "id": "806ca019eeb9d6c7",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Australia in msg.country below",
+        "info": "",
+        "x": 830,
+        "y": 380,
+        "wires": [],
+        "icon": "font-awesome/fa-location-arrow"
+    },
+    {
+        "id": "85350402f85afb2a",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "URL to check medal tally (open notes)",
+        "info": "For the Paralympics, change the \"Get medal tally\"\nnode below, change the Command field to update the URL.\n\nFrom:\ncurl -H \"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36\" https://olympics.com/en/paris-2024/medals\n\nTo:\ncurl -H \"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36\" https://olympics.com/en/paris-2024/paralympic-games/medals\n\n\nNote I am assuming the Paralympics medal tally URL will be:\nhttps://olympics.com/en/paris-2024/paralympic-games/medals",
+        "x": 1340,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d0379f1b3d9df239",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "**** For Paralympics, you need to edit this field ****",
+        "info": "",
+        "x": 1380,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "83eced6de4e0c038",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "**** You need to edit this field ****",
+        "info": "",
+        "x": 840,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "dbc005e93c1d3262",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get Total",
+        "methods": [
+            {
+                "name": "unescapeHTML",
+                "params": []
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "<td data-text=\"Australia\">"
+                    },
+                    {
+                        "type": "str",
+                        "value": "<td data-text"
+                    }
+                ]
+            },
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "AUS Total\">"
+                    }
+                ]
+            },
+            {
+                "name": "getLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "</strong>"
+                    }
+                ]
+            },
+            {
+                "name": "stripTags",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "toInteger",
+                "params": []
+            }
+        ],
+        "prop": "payload",
+        "propout": "total_medals",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 690,
+        "y": 1740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b2b1562870cc8731",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get Bronze",
+        "methods": [
+            {
+                "name": "unescapeHTML",
+                "params": []
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "<td data-text=\"Australia\">"
+                    },
+                    {
+                        "type": "str",
+                        "value": "<td data-text"
+                    }
+                ]
+            },
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "AUS Bronze Medal Total\">"
+                    }
+                ]
+            },
+            {
+                "name": "getLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "</a>"
+                    }
+                ]
+            },
+            {
+                "name": "stripTags",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "toInteger",
+                "params": []
+            }
+        ],
+        "prop": "payload",
+        "propout": "bronze_medals",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 700,
+        "y": 1600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b640acadde28c4e",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get Silver",
+        "methods": [
+            {
+                "name": "unescapeHTML",
+                "params": []
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "<td data-text=\"Australia\">"
+                    },
+                    {
+                        "type": "str",
+                        "value": "<td data-text"
+                    }
+                ]
+            },
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "AUS Silver Medal Total\">"
+                    }
+                ]
+            },
+            {
+                "name": "getLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "</a>"
+                    }
+                ]
+            },
+            {
+                "name": "stripTags",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "toInteger",
+                "params": []
+            }
+        ],
+        "prop": "payload",
+        "propout": "silver_medals",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 690,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f708d556c458bec4",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get Gold",
+        "methods": [
+            {
+                "name": "unescapeHTML",
+                "params": []
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "Great Britain</span>"
+                    },
+                    {
+                        "type": "str",
+                        "value": "<div data-testid=\"noc-row\""
+                    }
+                ]
+            },
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "AUS Gold Medal Total\">"
+                    }
+                ]
+            },
+            {
+                "name": "getLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "</a>"
+                    }
+                ]
+            },
+            {
+                "name": "stripTags",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "toInteger",
+                "params": []
+            }
+        ],
+        "prop": "payload",
+        "propout": "gold_medals",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 690,
+        "y": 1320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "681286ef8ee98c74",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "3c671492015d0227",
+        "type": "debug",
+        "z": "90352d74c8b6c659",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "2c3f94e630cb0f16",
+        "type": "string",
+        "z": "90352d74c8b6c659",
+        "name": "Get Ranking",
+        "methods": [
+            {
+                "name": "unescapeHTML",
+                "params": []
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "<strong>"
+                    },
+                    {
+                        "type": "str",
+                        "value": "<td data-text=\"Australia\">"
+                    }
+                ]
+            },
+            {
+                "name": "right",
+                "params": [
+                    {
+                        "type": "num",
+                        "value": "30"
+                    }
+                ]
+            },
+            {
+                "name": "delRightMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "stripTags",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": ">"
+                    }
+                ]
+            },
+            {
+                "name": "collapseWhitespace",
+                "params": []
+            },
+            {
+                "name": "toInteger",
+                "params": []
+            }
+        ],
+        "prop": "payload",
+        "propout": "medal_ranking",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 700,
+        "y": 1880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "62329cad6848677d",
+        "type": "inject",
+        "z": "90352d74c8b6c659",
+        "name": "Check medal tally every 5 minutes",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "10",
+        "topic": "",
+        "x": 210,
+        "y": 1340,
+        "wires": [
+            [
+                "d075586a77805791"
+            ]
+        ]
+    },
+    {
+        "id": "d075586a77805791",
+        "type": "exec",
+        "z": "90352d74c8b6c659",
+        "command": " curl -H \"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36\" https://olympics.com/en/paris-2024/medals",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "10",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Get medal tally",
+        "x": 480,
+        "y": 1340,
+        "wires": [
+            [
+                "dbc005e93c1d3262",
+                "b2b1562870cc8731",
+                "8b640acadde28c4e",
+                "f708d556c458bec4",
+                "2c3f94e630cb0f16"
+            ],
+            [
+                "681286ef8ee98c74"
+            ],
+            [
+                "3c671492015d0227"
+            ]
+        ]
+    },
+    {
+        "id": "71c189ac6ed0c602",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "This worked for TOKYO 2020 - To choose a country, change the references to country Australia and country code AUS",
+        "info": "",
+        "x": 450,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "1f6096f2eef6a0cd",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Look for the following comments to adjust this flow for your set up",
+        "info": "",
+        "x": 290,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "bd54464dae9b86d2",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "**** You need to edit this field ****",
+        "info": "",
+        "x": 190,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "92ca286a25b04b7c",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "1. Choose which country you are tracking",
+        "info": "",
+        "x": 260,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "98680cf1c00dd08c",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "2. Update URL for Paralympics",
+        "info": "",
+        "x": 230,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f61022a28804d547",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "3. Update URL for \"Win\" music and \"Applause\"",
+        "info": "",
+        "x": 270,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "48e931947203d4a3",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "4. Set up notifications for your mobile",
+        "info": "",
+        "x": 240,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "7da91867e5f8f4d0",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "5. Set up announcements on your smart speaker (we have a Google speakers)",
+        "info": "",
+        "x": 370,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ebebccdd4b43b569",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "6. Flash lamps in your country's colours (Australia is green and gold)",
+        "info": "",
+        "x": 340,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "385b457f52d1bdcf",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "**** You need to edit this field ****",
+        "info": "",
+        "x": 6190,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "cc2599cb3ddd8d48",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "**** You need to edit this field ****",
+        "info": "",
+        "x": 6770,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "916a5b669912032a",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Set URL where win.mp3 is hosted and speaker to play sound on",
+        "info": "",
+        "x": 6870,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "13af329f44fee016",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "**** You need to edit this field ****",
+        "info": "",
+        "x": 7570,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "15da73b031f6d166",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Set URL where applause.mp3 is hosted and speaker to play sound on",
+        "info": "",
+        "x": 7690,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "3b17c4a550c082b7",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Lamp flashing in your country's colours - Australia is green and gold",
+        "info": "",
+        "x": 6780,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "a7201e186dbc336e",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "I have a global snooze all notifications across my entire",
+        "info": "",
+        "x": 5980,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "f55b3893f453c37f",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "Home Assistant set up, so that we don't wake up to the",
+        "info": "",
+        "x": 5980,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "635b301c12e6c394",
+        "type": "comment",
+        "z": "90352d74c8b6c659",
+        "name": "sounds of announcements when we're trying to sleep",
+        "info": "",
+        "x": 5970,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "549d68d4.32fdc8",
+        "type": "server",
+        "name": "hassio",
+        "version": 5,
+        "addon": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": 30,
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": "at: ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "h23",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": true
+    }
+]
