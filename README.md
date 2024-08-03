@@ -31,3 +31,5 @@ Use the YAML files in your system for initialisation of variables required
 - Incorporate olympic_medal_tally_and_notification.yaml into your YAML
 - Use the YAML in lovelace_for_olympic_medal_tally_card.yaml to create a card on your dashboard
 
+**This is of course not authorised by anyone to do with the Games and is just for fun**
+
